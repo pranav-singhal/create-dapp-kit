@@ -58,6 +58,17 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <style>{
+          \`
+          /* Override ConnectKit's empty href styles */
+          a[href=""] {
+            pointer-events: none;
+            text-decoration: none;
+          }
+          \`
+        }</style>
+      </head>
       <body suppressHydrationWarning={true}>
         <WagmiProvider>
           {children}
@@ -74,9 +85,24 @@ import { ConnectKitButton } from 'connectkit';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <ConnectKitButton />
+    <main className="flex min-h-screen flex-col items-center justify-center p-24">
+      <div className="z-10 w-full max-w-5xl items-center justify-center text-center">
+        <h1 className="mb-8 text-4xl font-bold">Welcome to Your Web3 App</h1>
+        <div className="flex justify-center">
+          <ConnectKitButton.Custom>
+            {({ isConnected, isConnecting, show, hide, address, ensName, truncatedAddress }) => {
+              return (
+                <button
+                  onClick={show}
+                  type="button"
+                  className="rounded-lg bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-600 transition-colors"
+                >
+                  {isConnected ? (ensName ?? truncatedAddress ?? address) : "Connect Wallet"}
+                </button>
+              );
+            }}
+          </ConnectKitButton.Custom>
+        </div>
       </div>
     </main>
   );
