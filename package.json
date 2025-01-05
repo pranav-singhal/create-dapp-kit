@@ -1,10 +1,10 @@
 {
-  "name": "create-eth",
+  "name": "create-dapp-kit",
   "version": "1.0.0",
-  "description": "Create a Next.js Web3 app with Wagmi and ConnectKit",
+  "description": "Create a Next.js Web3 dapp with Wagmi and ConnectKit in seconds",
   "main": "index.js",
   "bin": {
-    "create-eth": "index.js"
+    "create-dapp-kit": "index.js"
   },
   "type": "commonjs",
   "keywords": [
@@ -13,11 +13,13 @@
     "nextjs",
     "wagmi",
     "connectkit",
-    "create-eth",
+    "create-dapp-kit",
     "dapp",
-    "starter"
+    "starter",
+    "web3-kit",
+    "dapp-starter"
   ],
-  "author": "Your Name",
+  "author": "Pranav Singhal",
   "license": "MIT",
   "dependencies": {
     "child_process": "^1.0.2",
@@ -27,10 +29,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/create-eth.git"
+    "url": "git+https://github.com/pranav-singhal/create-dapp-kit.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/create-eth/issues"
+    "url": "https://github.com/pranav-singhal/create-dapp-kit/issues"
   },
-  "homepage": "https://github.com/yourusername/create-eth#readme"
+  "homepage": "https://github.com/pranav-singhal/create-dapp-kit#readme"
 } 

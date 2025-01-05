@@ -1,6 +1,6 @@
-# create-eth
+# create-dapp-kit
 
-Create a Next.js Web3 app with Wagmi and ConnectKit in seconds.
+Create a Next.js Web3 dapp with Wagmi and ConnectKit in seconds.
 
 ## Features
 
@@ -15,7 +15,7 @@ Create a Next.js Web3 app with Wagmi and ConnectKit in seconds.
 ## Quick Start
 
 ```bash
-npx create-eth my-dapp
+npx create-dapp-kit my-dapp
 cd my-dapp
 npm run dev
 ```
@@ -40,7 +40,7 @@ Before running this, make sure you have:
 
 The generated project will ask for your WalletConnect Project ID during setup. This will be saved in `.env.local`.
 
-You can customize the chains and RPC URLs in `src/wagmi.js`.
+You can customize the chains and RPC URLs in `src/providers.tsx`.
 
 ## License
 
