@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // Import required modules
 const { execSync } = require('child_process');
 const fs = require('fs');
@@ -21,8 +23,8 @@ async function promptWalletConnectId() {
 function configureWagmi() {
   const wagmiConfigContent = `'use client';
 
-import { createConfig, WagmiConfig } from 'wagmi';
-import { mainnet, goerli } from 'wagmi/chains';
+import { createConfig, WagmiProvider, http } from 'wagmi';
+import { mainnet, sepolia } from 'wagmi/chains';
 import { ConnectKitProvider, getDefaultConfig } from 'connectkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
@@ -31,24 +33,39 @@ const queryClient = new QueryClient();
 const config = createConfig(
   getDefaultConfig({
     appName: 'My Web3 App',
-    chains: [mainnet, goerli],
+    appUrl: "https://example.com",
+    appIcon: "https://example.com/icon.png",
+    appDescription: "Ready, set, connect!",
+    chains: [mainnet, sepolia],
+    transports: {
+      // RPC URL for each chain
+      [mainnet.id]: http(
+        "https://eth-mainnet.g.alchemy.com/v2/demo",
+      ),
+      [sepolia.id]: http(
+        "https://eth-sepolia.g.alchemy.com/v2/demo",
+      ),
+    },
+    
     walletConnectProjectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || '',
   })
 );
 
-export function WagmiProvider({ children }) {
+export function Web3Provider({ children }) {
   return (
-    <WagmiConfig config={config}>
+    <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <ConnectKitProvider>{children}</ConnectKitProvider>
+        <ConnectKitProvider>
+          {children}
+        </ConnectKitProvider>
       </QueryClientProvider>
-    </WagmiConfig>
+    </WagmiProvider>
   );
 };
 `;
 
   const layoutContent = `import './globals.css';
-import { WagmiProvider } from '../wagmi';
+import { Web3Provider } from '../providers';
 
 export const metadata = {
   title: 'Web3 App',
@@ -58,21 +75,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        <style>{
-          \`
-          /* Override ConnectKit's empty href styles */
-          a[href=""] {
-            pointer-events: none;
-            text-decoration: none;
-          }
-          \`
-        }</style>
-      </head>
       <body suppressHydrationWarning={true}>
-        <WagmiProvider>
+        <Web3Provider>
           {children}
-        </WagmiProvider>
+        </Web3Provider>
       </body>
     </html>
   );
@@ -89,19 +95,7 @@ export default function Home() {
       <div className="z-10 w-full max-w-5xl items-center justify-center text-center">
         <h1 className="mb-8 text-4xl font-bold">Welcome to Your Web3 App</h1>
         <div className="flex justify-center">
-          <ConnectKitButton.Custom>
-            {({ isConnected, isConnecting, show, hide, address, ensName, truncatedAddress }) => {
-              return (
-                <button
-                  onClick={show}
-                  type="button"
-                  className="rounded-lg bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-600 transition-colors"
-                >
-                  {isConnected ? (ensName ?? truncatedAddress ?? address) : "Connect Wallet"}
-                </button>
-              );
-            }}
-          </ConnectKitButton.Custom>
+          <ConnectKitButton />
         </div>
       </div>
     </main>
@@ -121,7 +115,7 @@ export default function Home() {
     fs.mkdirSync(appDir);
   }
 
-  fs.writeFileSync(path.join(process.cwd(), 'src/wagmi.js'), wagmiConfigContent);
+  fs.writeFileSync(path.join(process.cwd(), 'src/providers.tsx'), wagmiConfigContent);
   fs.writeFileSync(path.join(process.cwd(), 'src/app/layout.tsx'), layoutContent);
   fs.writeFileSync(path.join(process.cwd(), 'src/app/page.tsx'), pageContent);
 
