@@ -1,0 +1,36 @@
+{
+  "name": "create-eth",
+  "version": "1.0.0",
+  "description": "Create a Next.js Web3 app with Wagmi and ConnectKit",
+  "main": "index.js",
+  "bin": {
+    "create-eth": "index.js"
+  },
+  "type": "commonjs",
+  "keywords": [
+    "ethereum",
+    "web3",
+    "nextjs",
+    "wagmi",
+    "connectkit",
+    "create-eth",
+    "dapp",
+    "starter"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "fs": "^0.0.1-security",
+    "path": "^0.12.7",
+    "readline": "^1.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/create-eth.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/create-eth/issues"
+  },
+  "homepage": "https://github.com/yourusername/create-eth#readme"
+} 
